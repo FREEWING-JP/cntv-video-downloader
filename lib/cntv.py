@@ -19,6 +19,7 @@ def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, 
     :param is_remain: 是否保留临时目录
     :return:
     """
+    url = url.replace('http://', 'https://')
     pid = get_pid_by_url(url)
     if not pid:
         return
@@ -129,22 +130,22 @@ def get_pid_by_url(url):
     :param url:
     :return:
     """
-    if re.match(r'http://tv\.cntv\.cn/video/(\w+)/(\w+)', url):
-        pid = match1(url, r'http://tv\.cntv\.cn/video/\w+/(\w+)')
-    elif re.match(r'http://tv\.cctv\.com/\d+/\d+/\d+/\w+.shtml', url):
+    if re.match(r'https://tv\.cntv\.cn/video/(\w+)/(\w+)', url):
+        pid = match1(url, r'https://tv\.cntv\.cn/video/\w+/(\w+)')
+    elif re.match(r'https://tv\.cctv\.com/\d+/\d+/\d+/\w+.shtml', url):
         pid = r1(r'var guid = "(\w+)"', get_html(url, const.USER_AGENT, const.REFER_URL))
-    elif re.match(r'http://\w+\.cntv\.cn/(\w+/\w+/(classpage/video/)?)?\d+/\d+\.shtml', url) or \
-            re.match(r'http://\w+.cntv.cn/(\w+/)*VIDE\d+.shtml', url) or \
-            re.match(r'http://(\w+).cntv.cn/(\w+)/classpage/video/(\d+)/(\d+).shtml', url) or \
-            re.match(r'http://\w+.cctv.com/\d+/\d+/\d+/\w+.shtml', url) or \
-            re.match(r'http://\w+.cntv.cn/\d+/\d+/\d+/\w+.shtml', url):
+    elif re.match(r'https://\w+\.cntv\.cn/(\w+/\w+/(classpage/video/)?)?\d+/\d+\.shtml', url) or \
+            re.match(r'https://\w+.cntv.cn/(\w+/)*VIDE\d+.shtml', url) or \
+            re.match(r'https://(\w+).cntv.cn/(\w+)/classpage/video/(\d+)/(\d+).shtml', url) or \
+            re.match(r'https://\w+.cctv.com/\d+/\d+/\d+/\w+.shtml', url) or \
+            re.match(r'https://\w+.cntv.cn/\d+/\d+/\d+/\w+.shtml', url):
         page = get_html(url, const.USER_AGENT, const.REFER_URL)
         pid = r1(r'videoCenterId","(\w+)"', page)
         if pid is None:
             guid = re.search(r'guid\s*=\s*"([0-9a-z]+)"', page).group(1)
             pid = guid
-    elif re.match(r'http://xiyou.cntv.cn/v-[\w-]+\.html', url):
-        pid = r1(r'http://xiyou.cntv.cn/v-([\w-]+)\.html', url)
+    elif re.match(r'https://xiyou.cntv.cn/v-[\w-]+\.html', url):
+        pid = r1(r'https://xiyou.cntv.cn/v-([\w-]+)\.html', url)
     else:
         pid = None
 
