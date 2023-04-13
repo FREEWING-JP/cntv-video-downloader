@@ -56,7 +56,7 @@ def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, 
     video_list = video[chapters[quality_type - 1]]
     for x in video_list:
         url = x['url']
-        if isinstance(url, unicode):
+        if isinstance(url, bytes):
             url = url.encode('utf8')
         result.append(url)
         temp_list.append('file\t' + '\'' + url.split('/')[-1] + '\'')

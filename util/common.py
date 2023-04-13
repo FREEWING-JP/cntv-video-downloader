@@ -4,7 +4,8 @@ import os
 import re
 import pycurl
 import shutil
-from StringIO import StringIO
+# from StringIO import StringIO
+from io import BytesIO
 
 
 def match1(text, *patterns):
@@ -52,11 +53,11 @@ def get_html(url, user_agent, refer_url):
     curl.setopt(pycurl.USERAGENT, user_agent)
     curl.setopt(pycurl.REFERER, refer_url)
 
-    buffers = StringIO()
+    buffers = BytesIO()
     curl.setopt(pycurl.URL, url)
     curl.setopt(pycurl.WRITEDATA, buffers)
     curl.perform()
-    body = buffers.getvalue()
+    body = buffers.getvalue().decode('utf-8')
     buffers.close()
     curl.close()
 
