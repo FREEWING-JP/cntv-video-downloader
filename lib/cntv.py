@@ -30,6 +30,19 @@ def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, 
     if data['ack'] == 'no':
         return
     title = data['title']
+    title = title.replace("\\", '_')
+    title = title.replace('/', '_')
+    title = title.replace(':', '_')
+    title = title.replace('*', '_')
+    title = title.replace('?', '_')
+    title = title.replace('"', '_')
+    title = title.replace('<', '(')
+    title = title.replace('>', ')')
+    title = title.replace('|', '_')
+    title = title.replace('.', '-')
+    # title = title.replace('+', '_')
+    # title = title.replace('~', '_')
+    # title = title.replace("'", '_')
     video = data['video']
     valid_chapter_num = video['validChapterNum']
     chapters = [x for x in video.keys() if 'hapters' in x]
