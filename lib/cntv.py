@@ -3,13 +3,14 @@
 import datetime
 import json
 import multiprocessing as mul
+import os
 import subprocess as sub
 
 from util.common import *
 from share import const
 
 
-def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, is_remain=True):
+def get_download_link(url, quality_type, get_dlink_only=True, is_merge=False, is_remain=True, is_convert_ntsc=False):
     """
     获取视频链接
     :param url: 源地址
@@ -17,6 +18,7 @@ def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, 
     :param get_dlink_only: 是否仅获取链接
     :param is_merge: 是否合并分段视频
     :param is_remain: 是否保留临时目录
+    :param is_convert_ntsc: 変換NTSC
     :return:
     """
     url = url.replace('http://', 'https://')
@@ -104,7 +106,19 @@ def merge_video(output_file):
     sub.Popen(cmd, shell=True, stdout=sub.PIPE).stdout.read()
 
 
-def download_videos(title, dlinks=None, link_file=None, is_merge=False, is_remain=True):
+def convert_ntsc(output_file):
+    """
+    ffmpeg转换为 NTSC
+    :param output_file:
+    :return:
+    """
+    cmd = '/usr/bin/ffmpeg -i ./%s/"%s" -target ntsc-dvd ./%s/"%s"' % (
+        const.BASE_VIDEO_DIR, output_file, const.NTSC_VIDEO_DIR, output_file)
+    print(u'转换为 NTSC ffmpeg cmd: %s' % cmd)
+    sub.Popen(cmd, shell=True, stdout=sub.PIPE).stdout.read()
+
+
+def download_videos(title, dlinks=None, link_file=None, is_merge=False, is_remain=True, is_convert_ntsc=False):
     """
     下载所有视频
     :param title:
@@ -112,6 +126,7 @@ def download_videos(title, dlinks=None, link_file=None, is_merge=False, is_remai
     :param link_file:
     :param is_merge:
     :param is_remain:
+    :param is_convert_ntsc:
     :return:
     """
     video_links = list()
@@ -142,6 +157,9 @@ def download_videos(title, dlinks=None, link_file=None, is_merge=False, is_remai
         # 删除分段视频
         if not is_remain:
             remove_dir(const.TMP_DIR)
+        # NTSC
+        if is_convert_ntsc and is_merge:
+            convert_ntsc(title)
 
 
 def get_pid_by_url(url):

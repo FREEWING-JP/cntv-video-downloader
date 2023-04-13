@@ -5,6 +5,7 @@ USER_AGENT = 'Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) Apple
 REFER_URL = 'https://tv.cctv.com/'
 API_URL = 'https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do'
 BASE_VIDEO_DIR = 'out'
+NTSC_VIDEO_DIR = 'out_ntsc'
 TMP_DIR = 'tmp'
 TMP_FILE = 'tmp_file_list.txt'
 # 进程数(参考cpu核数)
