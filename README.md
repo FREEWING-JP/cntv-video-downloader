@@ -1,3 +1,17 @@
+# quality_type
+```
+    stream_types = [
+        {'id': '1', 'video_profile': '1280x720_2000kb/s', 'map_to': 'chapters4'},
+        {'id': '2', 'video_profile': '1280x720_1200kb/s', 'map_to': 'chapters3'},
+        {'id': '3', 'video_profile': '640x360_850kb/s', 'map_to': 'chapters2'},
+        {'id': '4', 'video_profile': '480x270_450kb/s', 'map_to': 'chapters'},
+        {'id': '5', 'video_profile': '320x180_200kb/s', 'map_to': 'lowChapters'},
+    ]
+
+stream_types 1 = quality_type 5
+stream_types 5 = quality_type 1
+```
+
 # cntv-video-downloader
 cntv/cctv视频下载
 
