@@ -80,7 +80,7 @@ def wget_video(link_url):
     video_name = link_url.split('/')[-1]
     print(u'*' * 40)
     print(u'正在下载%s' % video_name)
-    cmd = '/usr/bin/wget --no-clobber -O ./%s/%s %s' % (const.TMP_DIR, video_name, link_url)
+    cmd = '/usr/bin/wget --timeout=150 --waitretry=1 --tries=10 --retry-connrefused -O ./%s/%s %s' % (const.TMP_DIR, video_name, link_url)
     print('wget cmd: %s' % cmd)
     sub.Popen(cmd, shell=True, stdout=sub.PIPE).stdout.read()
 
