@@ -65,6 +65,10 @@ def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, 
         return
 
     print(u'标题: %s' % title)
+    if os.path.exists('./%s/%s.txt' % ( const.BASE_VIDEO_DIR, title )):
+        print(u'跳过: %s' % title)
+        return
+
     save_to_file(result, title + '.txt', const.BASE_VIDEO_DIR)
     save_to_file(temp_list, const.TMP_FILE, const.TMP_DIR)
 
