@@ -23,6 +23,8 @@ def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, 
     pid = get_pid_by_url(url)
     if not pid:
         return
+
+    print('pid: ' + pid)
     target_url = const.API_URL + '?pid=' + pid
     data = json.loads(get_html(target_url, const.USER_AGENT, const.REFER_URL))
     result = list()
@@ -62,6 +64,7 @@ def get_download_link(url, quality_type=2, get_dlink_only=True, is_merge=False, 
     if not result:
         return
 
+    print(u'标题: %s' % title)
     save_to_file(result, title + '.txt', const.BASE_VIDEO_DIR)
     save_to_file(temp_list, const.TMP_FILE, const.TMP_DIR)
 
@@ -79,7 +82,7 @@ def wget_video(link_url):
     """
     video_name = link_url.split('/')[-1]
     print(u'*' * 40)
-    print(u'正在下载%s' % video_name)
+    print(u'正在下载: %s' % video_name)
     cmd = '/usr/bin/wget --timeout=150 --waitretry=1 --tries=10 --retry-connrefused -O ./%s/%s %s' % (const.TMP_DIR, video_name, link_url)
     print('wget cmd: %s' % cmd)
     sub.Popen(cmd, shell=True, stdout=sub.PIPE).stdout.read()
